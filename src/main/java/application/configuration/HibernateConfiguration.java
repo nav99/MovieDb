@@ -3,6 +3,7 @@ package application.configuration;
 import java.util.Properties;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 import org.h2.server.web.WebServlet;
 import org.hibernate.SessionFactory;
@@ -83,4 +84,8 @@ public class HibernateConfiguration {
 	    	registrationBean.addUrlMappings("/h2-console/*");
 	    	return registrationBean;
 	    }
+	 @Bean(initMethod="start",destroyMethod="stop")
+		public org.h2.tools.Server h2WebConsoleServer () throws SQLException {
+   	 	return org.h2.tools.Server.createWebServer("-web","-webAllowOthers","-webDaemon","-webPort", "8080");
+}
 }
